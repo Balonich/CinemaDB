@@ -1,0 +1,52 @@
+@page
+@model CinemaDB.Pages.Films.ListModel
+@{
+    ViewData["Title"] = "List";
+}
+
+<div class="d-flex justify-content-start">
+    <div>
+        <h1>All Films</h1>
+    </div>
+    <div class="ms-auto">
+        <a asp-page="Create" class="btn btn-primary btn-floating" data-mdb-ripple-color="#46464a"
+            style="background-color:#46464a"><i class="fas fa-plus fa-lg" style="color: #fbfbfb"></i></a>
+    </div>
+</div>
+
+<form asp-page="./List" method="get">
+    <div class="input-group">
+        <div class="form-outline">
+            @* TODO: STYLE *@
+            <input type="search" id="searchForm" class="form-control" name="SearchString"/>
+            <label class="form-label" for="searchForm">Search by name</label>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
+
+    </div>
+</form>
+
+
+<div class="row gx-5 justify-content-start">
+    @foreach (var film in Model.Films)
+    {
+        <partial name="_FilmCard" model="film" />
+    }
+
+    <div class="col-lg-3 col-md-12" style="padding-top: 2%;">
+        <a asp-page="Create" data-mdb-ripple-color="#46464a">
+            <div class="card text-center">
+
+                <div class="card-body">
+
+                    <p class="card-text">
+                        <i class="fas fa-plus fa-10x" style="margin-top: 71%; margin-bottom: 72%; color: #46464a"></i>
+                    </p>
+
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

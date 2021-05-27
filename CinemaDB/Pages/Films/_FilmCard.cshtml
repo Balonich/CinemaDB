@@ -1,0 +1,25 @@
+@model Film
+
+
+<div class="col-lg-3 col-md-12" style="padding-top: 2%;">
+    <div class="card  ">
+        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+            <img src=@Model.ThumbnailImage class="img-fluid" />
+            <a asp-page="./Details" asp-route-filmId="@Model.ID">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+            </a>
+        </div>
+
+        <div class="card-body">
+            <h5 class="card-title">@Model.Title</h5>
+            <p class="card-text">
+                @* @Model.Genres.First(), *@
+                @Model.ReleaseDate.Year
+            </p>
+
+
+        </div>
+        <div class="card-footer">@Model.GenresString</div>
+        @* TODO: Rating? *@
+    </div>
+</div>

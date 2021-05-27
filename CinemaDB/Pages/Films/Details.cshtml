@@ -1,0 +1,58 @@
+@page "{filmId:int}"
+@model CinemaDB.Pages.Films.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <img src=@Model.Film.ThumbnailImage class="img-fluid shadow-2-strong" />
+    </div>
+    <div class="col-md-8">
+        <div>
+            <div class="d-flex justify-content-start">
+                <div>
+                    <h2>
+                        @Model.Film.Title
+                    </h2>
+                </div>
+                <div class="ms-auto">
+                    <a asp-page="Create" class="btn btn-primary  btn-floating  btn-sm" data-mdb-ripple-color="#46464a"
+                        style="background-color:#46464a" asp-route-filmId="@Model.Film.ID"><i class="fas fa-pen"
+                            style="color: #fbfbfb"></i></a>
+                </div>
+            </div>
+            <h5>@Model.Film.ReleaseDate.Year, @Model.Film.AgeRestriction</h5>
+            <p>@Model.Film.Description</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <table class="table table-sm table-hover">
+                <tr>
+                    <th scope="row">Release Date: </th>
+                    <td>@Model.Film.ReleaseDate.ToShortDateString()</td>
+                </tr>
+                <tr>
+                    <th scope="row">Age Resctriction: </th>
+                    <td>@Model.Film.AgeRestriction</td>
+                </tr>
+                <tr>
+                    <th scope="row">Budget: </th>
+                    <td>@Model.Film.Budget$</td>
+                </tr>
+                <tr>
+                    <th scope="row">Country: </th>
+                    <td>@Model.Film.Country.Name</td>
+                </tr>
+                <tr>
+                    <th scope="row">Genres: </th>
+                    <td>@Model.Film.GenresString</td>
+                </tr>
+                <tr>
+                    <th scope="row">Studio: </th>
+                    <td>TODO</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

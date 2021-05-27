@@ -1,0 +1,49 @@
+@page "{personId:int}"
+@model CinemaDB.Pages.People.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <img src=@Model.Person.PortraitImage class="img-fluid shadow-2-strong" />
+    </div>
+    <div class="col-md-8">
+        <div>
+            <div class="d-flex justify-content-start">
+                <div>
+                    <h2>
+                        @Model.Person.FullName
+                    </h2>
+                </div>
+                <div class="ms-auto">
+                    <a asp-page="Create" class="btn btn-primary  btn-floating  btn-sm" data-mdb-ripple-color="#46464a"
+                        style="background-color:#46464a" asp-route-personId="@Model.Person.ID"><i class="fas fa-pen"
+                            style="color: #fbfbfb"></i></a>
+                </div>
+            </div>
+            <h5>@Model.Person.DateOfBirth.ToShortDateString(), @Model.Person.Country.Name</h5>
+            @* <p>Professions, top 3</p> *@
+        </div>
+        <div>
+            <h3>Filmography</h3>
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Film</th>
+                        <th scope="col">Profession</th>
+                        <th scope="col">Release Date</th>
+                    </tr>
+                </thead>
+                @foreach (var filmography in Model.Person.CustomFilmography)
+                {
+                    <tr>
+                        <td><a asp-page="../Films/Details" asp-route-filmId="@filmography.Film.ID">@filmography.Film.Title</a></td>
+                        <td>@filmography.ProfessionsInFilm</td>
+                        <td>@filmography.FilmReleaseDate.ToShortDateString()</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

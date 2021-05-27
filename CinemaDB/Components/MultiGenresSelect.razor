@@ -1,0 +1,73 @@
+@using Models
+@using Data
+@using Blazored.Typeahead
+@inject IGenreRepository genreRepository
+
+<BlazoredTypeahead SearchMethod="GetGenresLocal"
+                   @bind-Values="SelectedGenresWithNotFoundTemplate"
+                   EnableDropDown="true"
+                   MinimumLength="2"
+                   AddItemOnEmptyResultMethod="ItemAddedMethod"
+                   placeholder="Search by first name...">
+    <SelectedTemplate Context="Genre">
+        @Genre.Name
+    </SelectedTemplate>
+    <HelpTemplate>
+        Please enter a minimum of 2 characters to perform a search.
+    </HelpTemplate>
+    <NotFoundTemplate Context="searchText">
+        Add "@searchText" as a new user <br />
+        The newly added user will be selected after being added.
+    </NotFoundTemplate>
+    <ResultTemplate Context="Genre">
+        @Genre.Name (Id: @Genre.ID)
+    </ResultTemplate>
+</BlazoredTypeahead>
+
+
+@code {
+    private List<Genre> Genres;
+
+    private Genre SelectedGenre;
+    private Genre SelectedGenreNull;
+    private int? SelectedGenreId;
+    private IList<Genre> SelectedGenres;
+    private IList<Genre> SelectedGenresWithNotFoundTemplate;
+
+    protected override void OnInitialized()
+    {
+        Genres = genreRepository.AllGenres.ToList();
+        
+
+        SelectedGenre = new Genre { ID = 50, Name = "Bla" };
+    }
+
+    private async Task<IEnumerable<Genre>> GetGenresLocal(string searchText)
+    {
+        return await Task.FromResult(Genres.Where(x => x.Name.ToLower().Contains(searchText.ToLower())).ToList());
+    }
+
+    private void HandleFormSubmit()
+    {
+        Console.WriteLine("Form Submitted Successfully!");
+    }
+
+    public int? ConvertGenre(Genre genre)
+    {
+        return genre?.ID;
+    }
+
+    public Genre LoadSelectedGenre(int id)
+    {
+        return genreRepository.GetGenreById(id);
+    }
+
+    private readonly Random _random = new Random();
+    private Task<Genre> ItemAddedMethod(string searchText)
+    {
+        var newGenre = new Genre { ID = _random.Next(1000, int.MaxValue), Name = searchText };
+        Genres.Add(newGenre);
+        return Task.FromResult(newGenre);
+    }
+
+}

@@ -1,0 +1,63 @@
+@page "{filmId:int?}"
+@model CinemaDB.Pages.Films.CreateModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Film.ID" />
+    <div class="form-group">
+        <label asp-for="Film.Title"></label>
+        <input asp-for="Film.Title" class="form-control" />
+        <span class="text-danger" asp-validation-for="Film.Title"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Film.Description"></label>
+        <input asp-for="Film.Description" class="form-control" />
+        <span class="text-danger" asp-validation-for="Film.Description"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Film.ThumbnailImage"></label>
+        <input class="form-control" asp-for="Film.ThumbnailImage"></select>
+        <span class="text-danger" asp-validation-for="Film.ThumbnailImage"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Film.Budget"></label>
+        <input class="form-control" asp-for="Film.Budget"></select>
+        <span class="text-danger" asp-validation-for="Film.Budget"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Film.AgeRestriction"></label>
+        <input class="form-control" asp-for="Film.AgeRestriction"></select>
+        <span class="text-danger" asp-validation-for="Film.AgeRestriction"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Film.ReleaseDate"></label>
+        <input asp-for="Film.ReleaseDate" type="date" class="form-control" />
+        <span class="text-danger" asp-validation-for="Film.ReleaseDate"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Film.Country" class="control-label"></label>
+        <select asp-for="Film.Country.ID" class="form-control" asp-items="@Model.CountriesSelectList"></select>
+        <span asp-validation-for="Film.Country" class="text-danger"></span>
+    </div>
+    <script>
+        $(function () {
+            $('.selectpicker').selectpicker();
+        });
+    </script>
+    <div class="form-group">
+        <label asp-for="Film.Genres"></label>
+        <select multiple name="selectedGenres" class="selectpicker">
+            @foreach (var genre in Model.AssignedGenresDataList)
+            {
+                @:<option value="@genre.GenreID" @(Html.Raw(genre.Assigned ? "selected" : ""))>@genre.Name</option>
+            }
+        </select>
+        @* @Html.ListBox("Genre.ID", @ViewData["Genres"] as SelectList) *@
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    @* @(await Html.RenderComponentAsync<PeopleSelect>(RenderMode.ServerPrerendered)) *@
+</form>
